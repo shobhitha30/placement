@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+        <div class="card border-0 shadow-lg p-4 p-md-5">
+            <div class="text-center mb-4">
+                <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" 
+                     style="width: 60px; height: 60px;">
+                    <span style="font-size: 1.5rem;">⚙️</span>
+                </div>
+                <h2 class="fw-bold" style="color: var(--primary-dark); letter-spacing: -1px;">Update Your Profile</h2>
+                <p class="text-muted">Keep your academic and personal details current for the Placement Officer.</p>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="alert alert-warning border-0 rounded-3 small mb-4 d-flex align-items-center" style="background-color: #fffbeb; color: #92400e;">
+                    <span class="me-2">💡</span>
+                    <span>Any updates made here are <strong>instantly visible</strong> to the recruitment team. Please ensure your CGPA and resume are accurate.</span>
+                </div>
+
+                <div class="profile-form-section">
+                    {{ form.as_p }}
+                </div>
+
+                <div class="d-flex flex-column flex-md-row gap-3 mt-5">
+                    <button type="submit" class="btn btn-primary btn-lg shadow-sm flex-grow-1 py-3 fw-bold">
+                        Save Updated Changes
+                    </button>
+                    <a href="{% url 'student_dash' %}" class="btn btn-outline-secondary btn-lg py-3 px-4 fw-bold" style="border-radius: 12px;">
+                        Discard & Back
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Styling for Django auto-generated .as_p fields */
+    .profile-form-section p {
+        margin-bottom: 1.5rem;
+    }
+    
+    .profile-form-section label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.6rem;
+        font-size: 0.9rem;
+        color: #475569;
+    }
+
+    .profile-form-section input, 
+    .profile-form-section select, 
+    .profile-form-section textarea {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #1e293b;
+        background-color: #fcfdfe;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.75rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .profile-form-section input:focus,
+    .profile-form-section select:focus,
+    .profile-form-section textarea:focus {
+        background-color: #fff;
+        border-color: var(--accent-blue);
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.1);
+    }
+
+    .errorlist {
+        color: #ef4444;
+        font-size: 0.85rem;
+        padding-left: 0;
+        list-style: none;
+        margin-top: 0.5rem;
+    }
+
+    /* Support for multi-column feel on larger screens if fields allow */
+    @media (min-width: 768px) {
+        .profile-form-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0 2rem;
+        }
+        /* Make textarea and file fields take full width in the grid */
+        .profile-form-section p:has(textarea), 
+        .profile-form-section p:has(input[type="file"]) {
+            grid-column: span 2;
+        }
+    }
+</style>
+{% endblock %}

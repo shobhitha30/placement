@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 75vh;">
+    <div class="col-md-5 col-lg-4">
+        <div class="card border-0 shadow-lg p-4 p-md-5" style="border-radius: 20px;">
+            <div class="text-center mb-4">
+                <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" 
+                     style="width: 60px; height: 60px;">
+                    <span style="font-size: 1.5rem;">🔐</span>
+                </div>
+                <h2 class="fw-bold" style="color: var(--primary-dark); letter-spacing: -1px;">Portal Login</h2>
+                <p class="text-muted small">Welcome back! Please enter your details.</p>
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label fw-600 small text-secondary">Username</label>
+                    <div class="input-group">
+                        <input type="text" name="username" class="form-control" 
+                               placeholder="Enter your USN or Username" required 
+                               style="background-color: #f8fafc;">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-600 small text-secondary">Password</label>
+                    <div class="input-group">
+                        <input type="password" name="password" class="form-control" 
+                               placeholder="••••••••" required
+                               style="background-color: #f8fafc;">
+                    </div>
+                </div>
+
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg shadow-sm fw-bold py-2" style="font-size: 1rem;">
+                        Enter Portal
+                    </button>
+                </div>
+            </form>
+
+            {% if form.errors %}
+            <div class="alert alert-danger border-0 rounded-3 p-2 text-center" style="font-size: 0.85rem;">
+                <strong>Error:</strong> Invalid username or password.
+            </div>
+            {% endif %}
+
+            <div class="text-center mt-4 border-top pt-3">
+                <p class="text-muted small mb-0">
+                    New student? <a href="{% url 'register' %}" class="text-primary fw-bold text-decoration-none">Create an account</a>
+                </p>
+            </div>
+        </div>
+        
+        <p class="text-center text-muted mt-4 small">
+            &copy; 2025 Placement Portal Connect
+        </p>
+    </div>
+</div>
+
+<style>
+    /* Focus styles for the login inputs */
+    .form-control:focus {
+        background-color: #fff !important;
+        border-color: var(--accent-blue) !important;
+        box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.1) !important;
+    }
+    
+    .fw-600 { font-weight: 600; }
+</style>
+{% endblock %}

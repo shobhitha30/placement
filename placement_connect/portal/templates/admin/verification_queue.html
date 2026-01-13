@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="mb-4">
+    <a href="{% url 'admin_dash' %}" class="text-decoration-none text-muted small">← Back to Dashboard</a>
+    <h2 class="fw-bold mt-2">🎓 Student Verification Queue</h2>
+</div>
+
+<div class="card border-0 shadow-sm p-4">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Student Details</th>
+                    <th>USN</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>
+                        <div class="fw-bold">{{ student.user.get_full_name }}</div>
+                        <small class="text-muted">{{ student.department|upper }}</small>
+                    </td>
+                    <td>
+                        <span class="badge bg-light text-dark border px-3 py-2" style="font-family: monospace;">
+                            {{ student.usn }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if student.is_approved %}
+                            <span class="status-badge status-shortlisted">APPROVED</span>
+                        {% else %}
+                            <span class="status-badge status-pending">PENDING</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            {% if not student.is_approved %}
+                                <a href="{% url 'approve_student' student.id %}" class="btn btn-sm btn-success px-3">Approve</a>
+                                <a href="{% url 'reject_registration' student.id %}" 
+                                   class="btn btn-sm btn-outline-danger" 
+                                   onclick="return confirm('Are you sure you want to reject this registration?')">Reject</a>
+                            {% endif %}
+                            <a href="{{ student.resume.url }}" target="_blank" class="btn btn-sm btn-outline-primary d-flex align-items-center">
+                                Resume <span class="ms-1">📄</span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center py-5 text-muted">No students currently in the queue.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-center" style="min-height: 70vh;">
+    <div class="card border-0 shadow-lg p-5 text-center" style="max-width: 550px; border-radius: 24px;">
+        
+        <div class="mb-4">
+            <div class="display-1 text-warning bg-warning bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" 
+                 style="width: 100px; height: 100px;">
+                ⏳
+            </div>
+        </div>
+
+        <h2 class="fw-bold mb-3" style="color: var(--primary-dark); letter-spacing: -1px;">
+            Account Pending Approval
+        </h2>
+        
+        <p class="text-secondary fs-5 mb-4" style="line-height: 1.6;">
+            Your registration is currently being reviewed by the 
+            <span class="fw-bold text-dark">Placement Officer</span>.
+        </p>
+
+        <div class="p-4 mb-4 rounded-3 text-start" style="background-color: #fffbeb; border: 1px solid #fef3c7;">
+            <div class="d-flex mb-2">
+                <span class="me-2">📱</span>
+                <p class="small mb-0" style="color: #92400e;">
+                    <strong>SMS Notification:</strong> We will send a message to your registered phone number the moment your account is activated.
+                </p>
+            </div>
+            <div class="d-flex">
+                <span class="me-2">📑</span>
+                <p class="small mb-0" style="color: #92400e;">
+                    <strong>Verification:</strong> We are cross-verifying your USN and CGPA with the college records.
+                </p>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-lg py-3 fw-bold" style="border-radius: 12px;">
+                Return to Home
+            </a>
+        </div>
+        
+        <p class="mt-4 small text-muted">
+            Usually takes 24-48 business hours.
+        </p>
+    </div>
+</div>
+{% endblock %}

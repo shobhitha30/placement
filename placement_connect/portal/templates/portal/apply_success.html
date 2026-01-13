@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-center" style="min-height: 75vh;">
+    <div class="card border-0 shadow-lg p-5 text-center" style="max-width: 550px; border-radius: 24px;">
+        
+        <div class="mb-4">
+            <div class="display-1 text-primary bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center position-relative" 
+                 style="width: 110px; height: 110px;">
+                <span>🎉</span>
+                <div class="position-absolute bottom-0 end-0 bg-success rounded-circle d-flex align-items-center justify-content-center border border-white border-4" 
+                     style="width: 35px; height: 35px; font-size: 1rem; color: white;">
+                    ✓
+                </div>
+            </div>
+        </div>
+
+        <h2 class="fw-bold mb-3" style="color: var(--primary-dark); letter-spacing: -1.5px;">
+            Application Submitted!
+        </h2>
+        
+        <p class="text-secondary fs-5 mb-4" style="line-height: 1.6;">
+            Great job! Your profile and resume are now in the hands of the 
+            <span class="fw-bold text-dark">Placement Officer</span>.
+        </p>
+
+        <div class="p-4 mb-3 rounded-4 text-start" style="background-color: #ffffff; border: 2px solid #002147; box-shadow: 6px 6px 0px #ffcc00;">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="fw-bold mb-0" style="color: #002147; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">ATS Resume Match</h6>
+                <span class="badge" style="background-color: #002147; color: #ffcc00;">{{ score }}%</span>
+            </div>
+            
+            <div class="progress mb-2" style="height: 10px; border-radius: 10px; background-color: #e9ecef;">
+                <div class="progress-bar" role="progressbar" 
+                     style="width: {{ score }}%; background-color: {% if score >= 75 %}#28a745{% elif score >= 40 %}#ffc107{% else %}#dc3545{% endif %}; border-radius: 10px;" 
+                     aria-valuenow="{{ score }}" aria-valuemin="0" aria-valuemax="100">
+                </div>
+            </div>
+            <p class="small mb-0 text-muted">
+                {% if score >= 75 %}
+                    Excellent! Your resume highly matches the <strong>{{ job.company }}</strong> job description.
+                {% elif score >= 40 %}
+                    Good match. Your core skills align well with this role.
+                {% else %}
+                    Application received. Consider optimizing your keywords for similar roles.
+                {% endif %}
+            </p>
+        </div>
+        <div class="p-4 mb-4 rounded-4 text-start" style="background-color: #f0f7ff; border: 1px solid #e0efff;">
+            <div class="d-flex align-items-start mb-3">
+                <span class="me-3 fs-4">📱</span>
+                <div>
+                    <h6 class="fw-bold mb-1" style="color: #0052cc;">SMS Tracking</h6>
+                    <p class="small mb-0 text-muted">A notification will be sent to your registered mobile number if you are shortlisted.</p>
+                </div>
+            </div>
+            <div class="d-flex align-items-start">
+                <span class="me-3 fs-4">📊</span>
+                <div>
+                    <h6 class="fw-bold mb-1" style="color: #0052cc;">Live Status</h6>
+                    <p class="small mb-0 text-muted">You can track the real-time status of this application on your dashboard.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2">
+            <a href="{% url 'student_dash' %}" class="btn btn-primary btn-lg py-3 fw-bold shadow-sm" style="border-radius: 15px;">
+                Go to Dashboard
+            </a>
+        </div>
+        
+        <p class="mt-4 small text-muted">
+            Good luck with the recruitment process!
+        </p>
+    </div>
+</div>
+
+<style>
+    @keyframes pop {
+        0% { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    .card {
+        animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    /* Simple progress bar animation */
+    .progress-bar {
+        transition: width 1.5s ease-in-out;
+    }
+</style>
+{% endblock %}

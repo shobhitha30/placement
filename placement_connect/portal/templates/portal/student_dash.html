@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-end mb-4">
+    <div>
+        <h2 class="fw-bold mb-0" style="color: var(--primary-dark);">Student Dashboard</h2>
+        <p class="text-muted mb-0">Welcome back, {{ profile.user.first_name }}! Here’s what’s happening with your placements.</p>
+    </div>
+    <a href="{% url 'edit_profile' %}" class="btn btn-primary shadow-sm">
+        <span class="me-1">📝</span> Edit Profile
+    </a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card border-0 bg-white p-3 d-flex flex-row align-items-center">
+            <div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">🚀</div>
+            <div>
+                <h4 class="fw-bold mb-0">{{ my_applications.count }}</h4>
+                <small class="text-muted">Total Applications</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 bg-white p-3 d-flex flex-row align-items-center">
+            <div class="rounded-circle bg-success bg-opacity-10 p-3 me-3">🎯</div>
+            <div>
+                <h4 class="fw-bold mb-0">{{ jobs.count }}</h4>
+                <small class="text-muted">Eligible Drives</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 bg-white p-3 d-flex flex-row align-items-center">
+            <div class="rounded-circle bg-warning bg-opacity-10 p-3 me-3">⭐</div>
+            <div>
+                <h4 class="fw-bold mb-0">{{ profile.cgpa }}</h4>
+                <small class="text-muted">Current CGPA</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h4 class="fw-bold mb-0">📊 Application Tracking</h4>
+            </div>
+            <div class="card-body px-4">
+                {% for app in my_applications %}
+                <div class="d-flex align-items-center justify-content-between p-3 mb-3 rounded-3" style="background: #fcfdfe; border: 1px solid #f1f5f9;">
+                    <div class="d-flex align-items-center">
+                        <div class="company-logo-placeholder me-3 d-flex align-items-center justify-content-center fw-bold" 
+                             style="width: 45px; height: 45px; background: #eef2ff; color: #4361ee; border-radius: 12px;">
+                            {{ app.job.company|slice:":1" }}
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-0">{{ app.job.company }}</h6>
+                            <small class="text-muted">{{ app.job.title }} • {{ app.applied_on|date:"d M" }}</small>
+                        </div>
+                    </div>
+                    <div>
+                        {% if app.status == 'Shortlisted' %}
+                            <span class="status-badge status-shortlisted">Shortlisted</span>
+                        {% elif app.status == 'Rejected' %}
+                            <span class="status-badge status-rejected">Rejected</span>
+                        {% else %}
+                            <span class="status-badge status-pending">In Review</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-5">
+                    <p class="text-muted">You haven't applied for any positions yet.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm mb-4" style="background: linear-gradient(135deg, #fff9eb 0%, #fff 100%);">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h4 class="fw-bold mb-0">📢 Latest Updates</h4>
+            </div>
+            <div class="card-body px-4">
+                {% for ann in announcements %}
+                <div class="mb-4 position-relative ps-4">
+                    <div class="position-absolute start-0 top-0 h-100" style="width: 2px; background: #ffeeba;"></div>
+                    <h6 class="fw-bold mb-1">{{ ann.title }}</h6>
+                    <p class="small text-secondary mb-1" style="line-height: 1.4;">{{ ann.message }}</p>
+                    <small class="text-muted" style="font-size: 0.75rem;">{{ ann.posted_on|date:"M d, Y" }}</small>
+                </div>
+                {% empty %}
+                <p class="text-muted small">No new announcements at this time.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <h4 class="fw-bold mb-3 mt-2">🔥 Featured Opportunities</h4>
+        <div class="row g-3">
+            {% for job in jobs %}
+            <div class="col-md-6 col-xl-4">
+                <div class="card border-0 shadow-sm h-100 p-2">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <span class="badge bg-soft-primary text-primary" style="background: #eef2ff; font-size: 0.7rem;">{{ job.job_type }}</span>
+                            <small class="text-danger fw-bold" style="font-size: 0.75rem;">Ends {{ job.deadline|date:"d M" }}</small>
+                        </div>
+                        <h5 class="fw-bold mb-1">{{ job.title }}</h5>
+                        <p class="text-muted mb-3" style="font-size: 0.9rem;">{{ job.company }}</p>
+                        
+                        <div class="d-flex align-items-center mb-3 p-2 rounded-2" style="background: #f8fafc;">
+                            <div class="me-3">
+                                <small class="d-block text-muted" style="font-size: 0.7rem;">CGPA Req.</small>
+                                <span class="fw-bold" style="font-size: 0.85rem;">{{ job.min_cgpa }}</span>
+                            </div>
+                            <div class="vr mx-3 text-light"></div>
+                            <div>
+                                <small class="d-block text-muted" style="font-size: 0.7rem;">Package</small>
+                                <span class="fw-bold text-success" style="font-size: 0.85rem;">{{ job.package_range|default:"Competitive" }}</span>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            {% if job.official_link %}
+                                <a href="{{ job.official_link }}" target="_blank" class="btn btn-outline-primary btn-sm">Official Site ↗</a>
+                            {% endif %}
+                            <a href="{% url 'apply_now' job.id %}" class="btn btn-primary btn-sm">Apply via Portal</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="card border-0 shadow-sm p-4 text-center">
+                    <p class="text-muted mb-0">Currently no drives match your criteria.</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

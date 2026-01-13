@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-center" style="min-height: 70vh;">
+    <div class="card border-0 shadow-lg p-5 text-center" style="max-width: 550px; border-radius: 24px;">
+        <div class="mb-4">
+            <div class="display-1 text-success bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" 
+                 style="width: 100px; height: 100px;">
+                ✓
+            </div>
+        </div>
+
+        <h2 class="fw-bold mb-3" style="color: var(--primary-dark); letter-spacing: -1px;">
+            Registration Successful!
+        </h2>
+        
+        <p class="text-secondary fs-5 mb-4" style="line-height: 1.6;">
+            Your profile has been created and sent to the 
+            <span class="fw-bold text-dark">Placement Cell</span> for verification.
+        </p>
+
+        <div class="p-3 mb-4 rounded-3" style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+            <p class="small text-muted mb-0">
+                🚀 <strong>Next Step:</strong> You will receive an SMS notification once the admin verifies your credentials. After that, you can log in to apply for active drives.
+            </p>
+        </div>
+
+        <div class="d-grid">
+            <a href="{% url 'login' %}" class="btn btn-primary btn-lg shadow-sm py-3 fw-bold">
+                Return to Login
+            </a>
+        </div>
+        
+        <p class="mt-4 small text-muted">
+            Need help? Contact <a href="mailto:placement@college.edu" class="text-decoration-none">Placement Support</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
