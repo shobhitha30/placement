@@ -23,28 +23,6 @@
             <span class="fw-bold text-dark">Placement Officer</span>.
         </p>
 
-        <div class="p-4 mb-3 rounded-4 text-start" style="background-color: #ffffff; border: 2px solid #002147; box-shadow: 6px 6px 0px #ffcc00;">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="fw-bold mb-0" style="color: #002147; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">ATS Resume Match</h6>
-                <span class="badge" style="background-color: #002147; color: #ffcc00;">{{ score }}%</span>
-            </div>
-            
-            <div class="progress mb-2" style="height: 10px; border-radius: 10px; background-color: #e9ecef;">
-                <div class="progress-bar" role="progressbar" 
-                     style="width: {{ score }}%; background-color: {% if score >= 75 %}#28a745{% elif score >= 40 %}#ffc107{% else %}#dc3545{% endif %}; border-radius: 10px;" 
-                     aria-valuenow="{{ score }}" aria-valuemin="0" aria-valuemax="100">
-                </div>
-            </div>
-            <p class="small mb-0 text-muted">
-                {% if score >= 75 %}
-                    Excellent! Your resume highly matches the <strong>{{ job.company }}</strong> job description.
-                {% elif score >= 40 %}
-                    Good match. Your core skills align well with this role.
-                {% else %}
-                    Application received. Consider optimizing your keywords for similar roles.
-                {% endif %}
-            </p>
-        </div>
         <div class="p-4 mb-4 rounded-4 text-start" style="background-color: #f0f7ff; border: 1px solid #e0efff;">
             <div class="d-flex align-items-start mb-3">
                 <span class="me-3 fs-4">📱</span>

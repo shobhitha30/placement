@@ -323,39 +323,22 @@ def verification_page(request):
         'students': students,
     })
 
-# Import ATS utilities from the portal app
-from .ats_utils import extract_text_from_pdf, calculate_ats_score
-
 @login_required
 def apply_now(request, job_id):
     profile = get_object_or_404(StudentProfile, user=request.user)
     job = get_object_or_404(JobPosting, id=job_id)
     
-    if not profile.resume:
-        messages.error(request, "Please upload your resume before applying!")
-        return redirect('edit_profile')
-
     if profile.is_approved:
-        # 1. Get Resume Text
-        resume_text = extract_text_from_pdf(profile.resume.path)
-        
-        # 2. Calculate ATS Score based on Job Description
-        score = calculate_ats_score(resume_text, job.description)
-        
-        # 3. Create Application with Score
+        # Create Application
         app, created = Application.objects.get_or_create(
             student=profile, 
-            job=job,
-            defaults={'ats_score': score}
+            job=job
         )
         
         if not created:
             messages.info(request, "You have already applied for this drive.")
         else:
-            # OPTIONAL: Send SMS if score is very high!
-            if score > 70:
-                send_sms(format_phone_e164(profile.phone), f"Great match! Your resume scored {score}% for {job.company}.")
-            
-            return render(request, 'portal/apply_success.html', {'score': score})
+            messages.success(request, "Application submitted successfully!")
+            return render(request, 'portal/apply_success.html')
             
     return redirect('student_dash')
